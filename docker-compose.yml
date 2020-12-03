@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  web-server:
+    build:
+      dockerfile: php.Dockerfile
+      context: .
+    restart: always
+    volumes:
+      - "./html/:/var/www/html/"
+    ports:
+      - "8080:80"
+    networks:
+      testing_net:
+          ipv4_address: 172.28.0.3
+  mysql-server:
+    image: mysql:8.0.19
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      testing_net:
+          ipv4_address: 172.28.0.4
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.1
+    restart: always
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    ports:
+      - "5000:80"
+    networks:
+      testing_net:
+          ipv4_address: 172.28.0.2
+volumes:
+  mysql-data:
+
+networks:
+    testing_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.28.0.0/16
