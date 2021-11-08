@@ -12,8 +12,6 @@ RUN apt-get update && \
     apt-get install -y \
         zlib1g-dev 
 
-RUN docker-php-ext-install mbstring
-
 RUN docker-php-ext-install gd
 
 RUN apt-get update && apt-get install -y \
@@ -24,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get install -y \
         libzip-dev \
         zip \
-  && docker-php-ext-configure zip --with-libzip \
+  && docker-php-ext-configure zip \
   && docker-php-ext-install zip
 
 RUN apt-get update && \
