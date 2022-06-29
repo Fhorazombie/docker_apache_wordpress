@@ -1,6 +1,20 @@
 version: "3.7"
 services:
+  mysql-server:
+    image: mysql:8.0.19
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      testing_net:
+          ipv4_address: 172.28.0.4
   web-server:
+    depends_on:
+      - mysql-server
     build:
       dockerfile: php.Dockerfile
       context: .
@@ -12,16 +26,8 @@ services:
     networks:
       testing_net:
           ipv4_address: 172.28.0.3
-  mysql-server:
-    image: mysql:8.0.19
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      testing_net:
-          ipv4_address: 172.28.0.4
+      WORDPRESS_DB_HOST: mysql-server
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.1
     restart: always
