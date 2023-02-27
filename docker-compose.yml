@@ -22,7 +22,7 @@ services:
     volumes:
       - "./html/:/var/www/html/"
     ports:
-      - "8080:80"
+      - "80:80"
     networks:
       testing_net:
           ipv4_address: 172.28.0.3

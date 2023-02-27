@@ -45,3 +45,5 @@ RUN apt-get install -y git
 RUN apt-get install nodejs -y && \
     apt-get install npm -y && \
     apt-get install vim -y
+
+RUN a2enmod rewrite
