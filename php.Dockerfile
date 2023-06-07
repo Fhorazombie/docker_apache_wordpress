@@ -1,5 +1,7 @@
-FROM php:7.4.3-apache
+FROM php:8.0-apache
 RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install opcache
+COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # define timezone
 RUN echo "America/Mexico_City" > /etc/timezone
@@ -13,6 +15,8 @@ RUN apt-get update && \
         zlib1g-dev 
 
 RUN docker-php-ext-install gd
+
+RUN docker-php-ext-install bcmath
 
 RUN apt-get update && apt-get install -y \
     libmagickwand-dev --no-install-recommends \
@@ -47,3 +51,9 @@ RUN apt-get install nodejs -y && \
     apt-get install vim -y
 
 RUN a2enmod rewrite
+
+RUN echo "upload_max_filesize = 64M" >> /usr/local/etc/php/php.ini && \
+    echo "post_max_size = 64M" >> /usr/local/etc/php/php.ini && \
+    echo "memory_limit = 512M" >> /usr/local/etc/php/php.ini && \
+    echo "max_execution_time = 600" >> /usr/local/etc/php/php.ini && \
+    echo "max_input_vars = 3000" >> /usr/local/etc/php/php.ini

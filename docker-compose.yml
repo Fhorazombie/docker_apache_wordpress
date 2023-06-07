@@ -6,6 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
+      - ./mycustom.cnf:/etc/my.cnf
       - mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
