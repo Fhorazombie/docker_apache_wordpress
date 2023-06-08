@@ -42,6 +42,23 @@ services:
     networks:
       testing_net:
           ipv4_address: 172.28.0.2
+  ngrok:
+    depends_on:
+      - web-server
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+    networks:
+      testing_net:
+          ipv4_address: 172.28.0.5
 volumes:
   mysql-data:
 
