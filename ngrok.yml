@@ -1,0 +1,7 @@
+version: "2"
+authtoken: 1c9CuVXNTTNQ3wQiZG8OKknwzVO_6XWsF3dXFLEhZ1htnb5dG
+tunnels:
+  wordpress:
+    proto: http
+    addr: web-server:80
+    host_header: rewrite
